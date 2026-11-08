@@ -85,7 +85,7 @@ window.Desktop=(function(){
  }
  function bind(){
   $("#page").querySelectorAll("[data-app]").forEach(function(b){b.addEventListener("click",function(){openApp(b.dataset.app);});});
-  if($("#github-followers-home"))loadHomeGitHubStats();
+  if($("#github-followers-home")){loadHomeGitHubStats();githubRefreshTimer=setInterval(loadHomeGitHubStats,300000);}
   var f=$("#f");if(f)f.addEventListener("submit",submit);
   var notes=$("#notes-area");if(notes){try{notes.value=localStorage.getItem("adamPortfolioNotes")||"";}catch(e){}notes.addEventListener("input",function(){try{localStorage.setItem("adamPortfolioNotes",notes.value);$("#notes-status").textContent="Saved automatically.";}catch(e){$("#notes-status").textContent="Could not save on this device.";}});}
   var tf=$("#term-form");if(tf)tf.addEventListener("submit",function(e){e.preventDefault();var input=$("#term-input"),cmd=input.value.trim().toLowerCase(),out=$("#term-lines");out.innerHTML+='<p>gast@adam:~$ '+esc(input.value.trim())+'</p>';var response=cmd==="help"?"Befehle: help, about, projects, contact, clear":cmd==="about"?"Entwickler & Gründer. Entwickelt Webprojekte.":cmd==="projects"?"Öffne die App „Projekte“ auf dem Desktop.":cmd==="contact"?"E-Mail: "+CONFIG.email:cmd==="clear"?"":"Befehl nicht gefunden: "+cmd;if(cmd!=="clear")out.innerHTML+='<p>'+esc(response)+'</p>';else out.innerHTML="";input.value="";});
