@@ -9,20 +9,20 @@ window.Scene=(function(){
    if(!screenCtx)return;var c=screenCtx,w=c.canvas.width,h=c.canvas.height;
    c.fillStyle="#f7f8fa";c.fillRect(0,0,w,h);
    c.fillStyle="#183c73";c.fillRect(0,0,w,34);
-   c.fillStyle="#fff";c.font="bold 11px Arial";c.fillText("ADAM KRAUS  /  DIGITAL WORKSPACE",16,22);
-   c.fillStyle="#a16c2c";c.font="bold 9px Arial";c.fillText("PERSONAL PORTFOLIO / "+String(CONFIG.year||2026),18,62);
+   c.fillStyle="#fff";c.font="bold 11px Arial";c.fillText("ADAM KRAUS  /  DIGITALE ARBEITSWELT",16,22);
+   c.fillStyle="#a16c2c";c.font="bold 9px Arial";c.fillText("PERSÖNLICHES PORTFOLIO / "+String(CONFIG.year||2026),18,62);
    c.fillStyle="#11151b";c.font="bold 34px Arial";c.fillText(CONFIG.name||"Adam Kraus",18,112);
    c.fillStyle="#68717d";c.font="16px Arial";c.fillText(CONFIG.role||"Developer & Founder",18,139);
    c.fillStyle="#596575";c.font="11px Arial";
    var words=(CONFIG.about||"I build websites, web applications and digital tools.").split(" "),line="",y=168;
    words.forEach(function(word){var test=line?line+" "+word:word;if(c.measureText(test).width>430){c.fillText(line,18,y);line=word;y+=17;}else line=test;});
    if(line)c.fillText(line,18,y);
-   c.fillStyle="#183c73";c.fillRect(18,228,106,27);c.fillStyle="#fff";c.font="bold 9px Arial";c.fillText("EXPLORE PROJECTS",25,245);
-   c.fillStyle="#e4e8ed";c.fillRect(132,228,96,27);c.fillStyle="#25364a";c.fillText("GET IN TOUCH",143,245);
+   c.fillStyle="#183c73";c.fillRect(18,228,106,27);c.fillStyle="#fff";c.font="bold 9px Arial";c.fillText("PROJEKTE ANSEHEN",25,245);
+   c.fillStyle="#e4e8ed";c.fillRect(132,228,96,27);c.fillStyle="#25364a";c.fillText("KONTAKT",143,245);
    c.fillStyle="#d9dee5";c.fillRect(18,274,w-36,1);
-   c.fillStyle="#9aa2ac";c.font="bold 8px Arial";c.fillText("BUILDING DIGITAL THINGS THAT WORK.",18,296);
+   c.fillStyle="#9aa2ac";c.font="bold 8px Arial";c.fillText("ICH ENTWICKLE DIGITALE PROJEKTE.",18,296);
    c.fillStyle="#183c73";c.fillRect(18,h-30,Math.max(30,(now/45)%110),3);
-   c.fillStyle="#68717d";c.font="9px Arial";c.fillText("CLICK MONITOR TO OPEN DESKTOP",18,h-12);
+   c.fillStyle="#68717d";c.font="9px Arial";c.fillText("PC ANTIPPEN, UM IHN ZU STARTEN",18,h-12);
    screenTexture.needsUpdate=true;
  }
  function build(){
