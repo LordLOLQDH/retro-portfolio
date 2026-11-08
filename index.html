@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Your Name – Software Engineer</title>
+<meta name="description" content="Portfolio of Your Name, Software Engineer.">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div id="bios" class="full"></div>
+
+<div id="start" class="full">
+  <div class="box">
+    <p id="start-title"></p>
+    <p class="warn">WARNING: This experience is best viewed on a desktop or laptop computer.</p>
+    <p>Click start to begin</p>
+    <div class="center"><button class="s" id="go" type="button">START</button></div>
+  </div>
+</div>
+
+<div id="hint">Click anywhere to begin _</div>
+<div id="hud"><div id="hud-name"></div><div id="hud-role"></div></div>
+
+<div id="screen">
+  <div id="crt">
+    <div class="ico" style="top:8px"><i>Y</i>My Showcase</div>
+    <div class="ico" style="top:72px"><i>H</i>Notes</div>
+    <div id="win">
+      <div id="tb"><span id="tb-title"></span><span><span class="b">_</span><span class="b">□</span><button class="b" id="x" type="button" aria-label="Shut down">X</button></span></div>
+      <div id="page"></div>
+      <div id="status"></div>
+    </div>
+    <div id="task"><span>Start | My Showcase</span><span id="clk"></span></div>
+  </div>
+</div>
+<div id="sd"></div>
+<noscript><div class="full" style="padding:2rem;background:#000">This site needs JavaScript.</div></noscript>
+
+<script src="vendor/three.min.js"></script>
+<script src="vendor/supabase.js"></script>
+<script src="js/config.js"></script>
+<script src="js/supabase-client.js"></script>
+<script src="js/bios.js"></script>
+<script src="js/scene.js"></script>
+<script src="js/desktop.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
