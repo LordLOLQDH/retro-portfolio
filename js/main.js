@@ -22,24 +22,24 @@
   $("hud").style.display="block";$("hint").style.display="block";
   $("hint").textContent="PC antippen zum Starten · Joystick zum Bewegen";
   if(touchLayout)$("joystick").style.display="block";
-  state="walk";Scene.setMode("walk");return true;
+  state="room";Scene.setMode("room");return true;
  }
  function enterMonitor(){
   if(state!=="room")return;
   state="zoom";$("hint").style.display="none";$("hud").style.display="none";
   $("joystick").style.display="none";$("leave-monitor").style.display="block";
-  Scene.setMode("zoom");setTimeout(function(){if(state==="zoom")Desktop.open();},700);
+  Scene.setPower(true);Scene.setMode("zoom");setTimeout(function(){if(state==="zoom")Desktop.open();},700);
  }
  function leaveMonitor(){
   if(state!=="zoom")return;
   state="room";Desktop.close();$("leave-monitor").style.display="none";
   $("hud").style.display="block";$("hint").style.display="block";
   if(touchLayout)$("joystick").style.display="block";
-  Scene.setMode("walk");
+  Scene.setMode("room");
  }
  async function shutdown(){
   Desktop.close();
-  if(hasScene){state="room";$("leave-monitor").style.display="none";$("hud").style.display="block";$("hint").style.display="block";if(touchLayout)$("joystick").style.display="block";Scene.setMode("walk");}
+  if(hasScene){state="room";$("leave-monitor").style.display="none";$("hud").style.display="block";$("hint").style.display="block";if(touchLayout)$("joystick").style.display="block";Scene.setPower(false);Scene.setMode("room");}
   else{$("screen").style.display="grid";$("start").style.display="grid";state="boot";}
  }
  $("leave-monitor").addEventListener("click",leaveMonitor);
