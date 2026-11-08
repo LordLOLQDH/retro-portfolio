@@ -12,7 +12,7 @@
   try{
    if(!window.THREE||!window.Scene)return false;
    hasScene=Scene.init()===true;
-   if(hasScene){Scene.onMonitor(enterMonitor);Scene.setMode("walk");}
+   if(hasScene){Scene.onMonitor(enterMonitor);Scene.setMode("room");}
   }catch(error){hasScene=false;}
   return hasScene;
  }
@@ -20,34 +20,33 @@
   if(!initRoom()){ $("room-toggle").textContent="3D nicht verfügbar";return false; }
   $("screen").style.display="none";$("room-toggle").style.display="none";
   $("hud").style.display="block";$("hint").style.display="block";
-  $("hint").textContent="Zum PC gehen und antippen · Joystick zum Laufen";
+  $("hint").textContent="PC antippen zum Starten · Joystick zum Bewegen";
   if(touchLayout)$("joystick").style.display="block";
   state="walk";Scene.setMode("walk");return true;
  }
  function enterMonitor(){
-  if(state!=="walk")return;
+  if(state!=="room")return;
   state="zoom";$("hint").style.display="none";$("hud").style.display="none";
   $("joystick").style.display="none";$("leave-monitor").style.display="block";
   Scene.setMode("zoom");setTimeout(function(){if(state==="zoom")Desktop.open();},700);
  }
  function leaveMonitor(){
   if(state!=="zoom")return;
-  state="walk";Desktop.close();$("leave-monitor").style.display="none";
+  state="room";Desktop.close();$("leave-monitor").style.display="none";
   $("hud").style.display="block";$("hint").style.display="block";
   if(touchLayout)$("joystick").style.display="block";
   Scene.setMode("walk");
  }
  async function shutdown(){
   Desktop.close();
-  if(hasScene){state="walk";$("leave-monitor").style.display="none";$("hud").style.display="block";$("hint").style.display="block";if(touchLayout)$("joystick").style.display="block";Scene.setMode("walk");}
+  if(hasScene){state="room";$("leave-monitor").style.display="none";$("hud").style.display="block";$("hint").style.display="block";if(touchLayout)$("joystick").style.display="block";Scene.setMode("walk");}
   else{$("screen").style.display="grid";$("start").style.display="grid";state="boot";}
  }
  $("leave-monitor").addEventListener("click",leaveMonitor);
  $("go").addEventListener("click",function(e){
   e.stopPropagation();$("start").style.display="none";
-  if(!touchLayout&&showRoom())return;
+  if(showRoom())return;
   $("screen").style.display="grid";Desktop.open();state="desktop";
-  if(touchLayout)$("room-toggle").style.display="block";
  });
  $("room-toggle").addEventListener("click",function(e){
   e.stopPropagation();
