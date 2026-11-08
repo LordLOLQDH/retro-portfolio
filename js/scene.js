@@ -1,6 +1,6 @@
 /* 3D desk scene with a continuously animated CRT display texture. */
 window.Scene=(function(){
- var renderer,scene,camera,screenMesh,screenCanvas,screenCtx,screenTexture,mode="walk",t=0,player=new THREE.Vector3(0,0,4.2),move={x:0,y:0},keys={},onMonitor=function(){};
+ var renderer,scene,camera,screenMesh,screenCanvas,screenCtx,screenTexture,mode="room",t=0,player=new THREE.Vector3(0,0,4.2),move={x:0,y:0},keys={},onMonitor=function(){};
  var idlePos=new THREE.Vector3(4.2,3.1,5.2),lookAtHome=new THREE.Vector3(0,1.2,0),zoomPos=new THREE.Vector3(0,1.82,1.45),zoomLook=new THREE.Vector3(0,1.82,0),curLook=lookAtHome.clone(),targetPos=idlePos.clone();
  function mat(c,r){return new THREE.MeshStandardMaterial({color:c,roughness:r==null?.8:r});}
  function box(w,h,d,x,y,z,m,parent){var o=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),m);o.position.set(x,y,z);o.castShadow=o.receiveShadow=true;(parent||scene).add(o);return o;}
@@ -88,8 +88,8 @@ window.Scene=(function(){
      var nx=THREE.MathUtils.clamp(player.x+dx*.055,-4.4,4.4),nz=THREE.MathUtils.clamp(player.z+dz*.055,-4.2,5.2);
      // Keep the player out of the desk itself.
      if(!(Math.abs(nx)<2.05&&nz>-.95&&nz<1.15)){player.x=nx;player.z=nz;}
-     dest.set(player.x,player.y+1.65,player.z+0.02);camera.position.lerp(dest,.16);
-     var look=new THREE.Vector3(player.x,player.y+1.45,player.z-3.5);curLook.lerp(look,.16);
+     if(mode==="room"){dest.set(player.x+2.4,player.y+2.8,player.z+3.0);camera.position.lerp(dest,.075);var look=new THREE.Vector3(player.x,player.y+1.15,player.z-.8);curLook.lerp(look,.09);}
+     else{dest.set(player.x,player.y+1.65,player.z+0.02);camera.position.lerp(dest,.16);var look=new THREE.Vector3(player.x,player.y+1.45,player.z-3.5);curLook.lerp(look,.16);}
    }
    camera.lookAt(curLook);renderer.render(scene,camera);
  }
