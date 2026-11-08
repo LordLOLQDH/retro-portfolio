@@ -12,10 +12,10 @@ window.CONFIG = {
   experience: [],
 
   fallbackProjects: [
-    { title: "KDS AI", description: "AI assistant project with a Supabase backend.", url: "https://github.com/LordLOLQDH/KDS-AI", tags: "AI, Supabase" },
-    { title: "PHASEONE human", description: "Personal agent and productivity project.", url: "https://github.com/LordLOLQDH/PHASEONE-human-", tags: "AI, Web App" },
-    { title: "CODECORE", description: "Developer platform with voucher and authenticator modules.", url: "https://github.com/LordLOLQDH/CODECORE", tags: "Web App, Security" },
-    { title: "RIFTBOUND", description: "Browser game project.", url: "https://github.com/LordLOLQDH/riftbound", tags: "Game, JavaScript" }
+    { title: "KDS AI", description: "KI-Assistent mit Supabase-Backend.", url: "https://github.com/LordLOLQDH/KDS-AI", tags: "KI, Supabase" },
+    { title: "PHASEONE human", description: "Persönlicher Agent und Produktivitätsprojekt.", url: "https://github.com/LordLOLQDH/PHASEONE-human-", tags: "KI, Web-App" },
+    { title: "CODECORE", description: "Entwicklerplattform mit Gutschein- und Authenticator-Modulen.", url: "https://github.com/LordLOLQDH/CODECORE", tags: "Web-App, Sicherheit" },
+    { title: "RIFTBOUND", description: "Browsergame-Projekt.", url: "https://github.com/LordLOLQDH/riftbound", tags: "Spiel, JavaScript" }
   ],
 
   supabase: {
