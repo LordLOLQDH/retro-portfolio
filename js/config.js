@@ -2,8 +2,9 @@
 window.CONFIG = {
   name: "Adam Kraus",
   role: "Entwickler & Gründer",
-  email: "kraus-digital@proton.me",
+  email: "adam_kraus@icloud.com",
   privateEmail: "adam_kraus@icloud.com",
+  githubUser: "LordLOLQDH",
   year: 2026,
   github: "https://github.com/LordLOLQDH",
   linkedin: "",
