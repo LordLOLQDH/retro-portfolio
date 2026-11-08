@@ -170,3 +170,16 @@ Alle Pfade sind relativ, die Seite funktioniert daher auch in einem Unterordner 
 - Ohne WebGL (sehr alte Geräte) überspringt die Seite die 3D-Szene und zeigt direkt den Desktop.
 - Im BIOS-Screen überspringt ein Tastendruck oder Klick die Animation.
 - Three.js (MIT-Lizenz) liegt in `vendor/`; die Lizenz steht in `vendor/LICENSE-three.txt`.
+
+
+## GitHub im Portfolio
+
+Die App **GitHub** zeigt die öffentlichen Follower- und Repository-Zahlen des Profils `LordLOLQDH` und aktualisiert sie alle fünf Minuten. Für die Anmeldung und den Follow-Button muss in Supabase unter **Authentication → Sign In / Providers → GitHub** der GitHub-Anbieter eingerichtet sein.
+
+- GitHub OAuth App als Provider anlegen.
+- In Supabase die OAuth Client ID und das Client Secret hinterlegen.
+- Als Callback-URL die Supabase-Callback-Adresse verwenden: `https://eopvkwhcgznvubesaszv.supabase.co/auth/v1/callback`.
+- Die Website muss als Redirect-URL in Supabase erlaubt sein: `https://lordlolqdh.github.io/retro-protfolio/`.
+- Der OAuth-Zugriff benötigt die Scopes `read:user user:follow`, damit angemeldete Besucher dem Profil folgen können.
+
+Die Website speichert kein GitHub-Passwort. Die Anmeldung läuft über Supabase Auth und GitHub OAuth. Das GitHub-Zugriffstoken bleibt in der Auth-Session des angemeldeten Besuchers und wird nur für den Follow-Aufruf verwendet.
