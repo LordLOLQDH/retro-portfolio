@@ -20,7 +20,7 @@
   if(!initRoom()){ $("room-toggle").textContent="3D nicht verfügbar";return false; }
   $("screen").style.display="none";$("room-toggle").style.display="none";
   $("hud").style.display="block";$("hint").style.display="block";
-  $("hint").textContent="Zum Monitor gehen und ihn anklicken · WASD / Pfeiltasten oder Joystick";
+  $("hint").textContent="Zum PC gehen und antippen · Joystick zum Laufen";
   if(touchLayout)$("joystick").style.display="block";
   state="walk";Scene.setMode("walk");return true;
  }
