@@ -110,3 +110,14 @@ button.s{background:#e6ad58;color:#17130d;border:0;border-radius:5px;padding:.8r
 #joy-knob{position:absolute;width:46px;height:46px;left:38px;top:38px;border-radius:50%;background:linear-gradient(145deg,#f1c77d,#a96f32);border:2px solid #fff9;box-shadow:0 3px 12px #0008;pointer-events:none}
 #leave-monitor{display:none;position:fixed;z-index:8;top:14px;left:14px;border:1px solid #ffffff66;border-radius:8px;background:#101a28e8;color:#fff;padding:11px 15px;font:600 13px Arial;cursor:pointer}
 @media(max-width:600px){#room-toggle{top:10px;right:10px}#joystick{left:14px;bottom:calc(16px + env(safe-area-inset-bottom));width:116px;height:116px}#joy-knob{left:34px;top:34px;width:44px;height:44px}#leave-monitor{top:10px;left:10px}}
+
+/* GitHub-Konto und Live-Profilzahlen */
+.github-stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:20px 0}
+.github-stats>div{border:1px solid var(--line);background:#fff;padding:16px;display:flex;flex-direction:column;gap:5px}
+.github-stats strong{font-size:clamp(26px,6vw,38px);line-height:1;font-variant-numeric:tabular-nums;color:#183c73}
+.github-stats span{font-size:10px;color:#68717d;font-weight:700;text-transform:uppercase;letter-spacing:.08em}
+.github-account{border-top:1px solid var(--line);padding-top:12px}
+.github-account button{display:inline-block;margin:8px 8px 8px 0;padding:11px 15px;border:0;border-radius:3px;background:#183c73;color:#fff;font-weight:700;cursor:pointer}
+.github-account button[hidden]{display:none}
+.github-account button:disabled{opacity:.55;cursor:wait}
+@media(max-width:600px){.github-stats>div{padding:12px}.github-account button{width:100%;margin:7px 0}}
