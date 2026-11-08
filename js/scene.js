@@ -94,9 +94,9 @@ window.Scene=(function(){
    camera.lookAt(curLook);renderer.render(scene,camera);
  }
  function init(){try{renderer=new THREE.WebGLRenderer({antialias:true,alpha:false});}catch(e){return false;}
-   renderer.setPixelRatio(Math.min(devicePixelRatio||1,2));renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+   var touch=matchMedia("(pointer:coarse)").matches;renderer.setPixelRatio(Math.min(devicePixelRatio||1,touch?1.5:2));renderer.shadowMap.enabled=!touch;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
    renderer.domElement.id="room-canvas";document.body.prepend(renderer.domElement);scene=new THREE.Scene();camera=new THREE.PerspectiveCamera(55,1,.1,60);
-   build();resize();addEventListener("resize",resize);camera.position.set(0,1.7,4.22);curLook.set(0,1.45,.7);
+   build();resize();addEventListener("resize",resize);camera.position.set(2.4,2.8,7.2);curLook.set(0,1.15,3.4);
    addEventListener("keydown",function(e){keys[e.key]=true;if(["ArrowUp","ArrowDown","ArrowLeft","ArrowRight"," "].includes(e.key))e.preventDefault();});
    addEventListener("keyup",function(e){keys[e.key]=false;});
    renderer.domElement.addEventListener("click",function(e){if(mode!=="zoom"){var rect=renderer.domElement.getBoundingClientRect(),pointer=new THREE.Vector2(((e.clientX-rect.left)/rect.width)*2-1,-((e.clientY-rect.top)/rect.height)*2+1),ray=new THREE.Raycaster();ray.setFromCamera(pointer,camera);if(ray.intersectObject(screenMesh).length)onMonitor();}});
