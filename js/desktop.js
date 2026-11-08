@@ -15,7 +15,7 @@ window.Desktop=(function(){
  }
  function nav(){return '<nav class="app-nav">'+apps.slice(0,5).map(function(a){return '<button type="button" data-app="'+a.id+'">'+a.name+'</button>';}).join("")+'</nav>';}
  async function content(p){
-  if(p==="home")return '<section class="hero"><div class="eyebrow">PERSÖNLICHES PORTFOLIO / 2026</div><h1>'+esc(CONFIG.name)+'</h1><h3>'+esc(CONFIG.role)+'</h3><p>'+esc(CONFIG.about)+'</p><div class="hero-actions"><button type="button" data-app="projects">Projekte ansehen ↗</button><button type="button" data-app="contact" class="secondary">Kontakt aufnehmen</button></div><div class="hero-foot">ICH ENTWICKLE DIGITALE PROJEKTE.</div></section>';
+  if(p==="home")return '<section class="hero"><div class="eyebrow">PERSÖNLICHES PORTFOLIO / 2026</div><h1>'+esc(CONFIG.name)+'</h1><h3>'+esc(CONFIG.role)+'</h3><p>'+esc(CONFIG.about)+'</p><div class="hero-actions"><button type="button" data-app="projects">Projekte ansehen ↗</button><button type="button" data-app="contact" class="secondary">Kontakt aufnehmen</button></div><div class="hero-foot">ICH ENTWICKLE DIGITALE PROJEKTE.</div></section><div class="github-mini"><span>GITHUB LIVE</span><strong><b id="github-followers-home">…</b> Follower</strong><strong><b id="github-repos-home">…</b> Repositories</strong><button type="button" data-app="github">GitHub öffnen ↗</button></div>';
   if(p==="about")return '<h2>Über mich</h2><p>'+esc(CONFIG.about)+'</p><div class="info-grid"><div><b>SCHWERPUNKTE</b><p>Websites · Anwendungen · KI-Werkzeuge</p></div><div><b>ARBEITSWEISE</b><p>Neugier, Experimente und echte digitale Produkte.</p></div></div>';
   if(p==="projects"){var list=await Api.projects();return '<h2>Ausgewählte Projekte</h2><div class="project-grid">'+list.map(function(x,i){return '<article class="project-card"><div class="project-mark">PROJEKT / '+String(i+1).padStart(2,"0")+'</div><h3>'+esc(x.title)+'</h3><p>'+esc(x.description)+'</p><div class="project-bottom"><small>'+esc(x.tags||"DIGITAL")+'</small><a href="'+esc(safeUrl(x.url))+'" target="_blank" rel="noopener">ÖFFNEN ↗</a></div></article>';}).join("")+'</div>';}
   if(p==="contact")return '<h2>Lass uns etwas entwickeln.</h2><p>Du hast eine Idee oder möchtest Kontakt aufnehmen? Schreib mir eine Nachricht.</p><p><a href="mailto:'+esc(CONFIG.email)+'">'+esc(CONFIG.email)+'</a>　<a href="'+esc(safeUrl(CONFIG.github))+'" target="_blank" rel="noopener">GitHub ↗</a></p><form id="f" novalidate><div class="form-row"><div><label for="f-name">Dein Name</label><input id="f-name" name="name" required maxlength="100" autocomplete="name"></div><div><label for="f-email">Deine E-Mail-Adresse</label><input id="f-email" name="email" type="email" required maxlength="200" autocomplete="email"></div></div><label for="f-company">Unternehmen (optional)</label><input id="f-company" name="company" maxlength="100" autocomplete="organization"><label for="f-msg">Nachricht</label><textarea id="f-msg" name="message" rows="4" required maxlength="2000"></textarea><div class="hp"><input name="_honey" tabindex="-1" autocomplete="off"></div><button id="send-btn" type="submit">NACHRICHT SENDEN ↗</button> <span id="st" role="status" aria-live="polite"></span></form>';
@@ -30,6 +30,18 @@ window.Desktop=(function(){
   var html=await content(p);if(active!==p)return;$("#page").innerHTML=nav()+html;$("#page").scrollTop=0;bind();if(githubRefreshTimer){clearInterval(githubRefreshTimer);githubRefreshTimer=null;}if(p==="github")bindGithub();
   $("#task-items").innerHTML='<button type="button" class="active" data-app="'+p+'">'+appName(p)+'</button>';
   document.querySelectorAll("#desktop-apps [data-app]").forEach(function(b){b.classList.toggle("selected",b.dataset.app===p);});
+ }
+ async function loadHomeGitHubStats(){
+  try{
+   var response=await fetch("https://api.github.com/users/"+CONFIG.githubUser,{headers:{"Accept":"application/vnd.github+json"}});
+   if(!response.ok)throw new Error("GitHub API");
+   var profile=await response.json();
+   if($("#github-followers-home"))$("#github-followers-home").textContent=Number(profile.followers||0).toLocaleString("de-DE");
+   if($("#github-repos-home"))$("#github-repos-home").textContent=Number(profile.public_repos||0).toLocaleString("de-DE");
+  }catch(e){
+   if($("#github-followers-home"))$("#github-followers-home").textContent="–";
+   if($("#github-repos-home"))$("#github-repos-home").textContent="–";
+  }
  }
  async function bindGithub(){
   var followers=$("#github-followers"),repos=$("#github-repos"),state=$("#github-state"),login=$("#github-login"),follow=$("#github-follow"),logout=$("#github-logout");
@@ -73,6 +85,7 @@ window.Desktop=(function(){
  }
  function bind(){
   $("#page").querySelectorAll("[data-app]").forEach(function(b){b.addEventListener("click",function(){openApp(b.dataset.app);});});
+  if($("#github-followers-home"))loadHomeGitHubStats();
   var f=$("#f");if(f)f.addEventListener("submit",submit);
   var notes=$("#notes-area");if(notes){try{notes.value=localStorage.getItem("adamPortfolioNotes")||"";}catch(e){}notes.addEventListener("input",function(){try{localStorage.setItem("adamPortfolioNotes",notes.value);$("#notes-status").textContent="Saved automatically.";}catch(e){$("#notes-status").textContent="Could not save on this device.";}});}
   var tf=$("#term-form");if(tf)tf.addEventListener("submit",function(e){e.preventDefault();var input=$("#term-input"),cmd=input.value.trim().toLowerCase(),out=$("#term-lines");out.innerHTML+='<p>gast@adam:~$ '+esc(input.value.trim())+'</p>';var response=cmd==="help"?"Befehle: help, about, projects, contact, clear":cmd==="about"?"Entwickler & Gründer. Entwickelt Webprojekte.":cmd==="projects"?"Öffne die App „Projekte“ auf dem Desktop.":cmd==="contact"?"E-Mail: "+CONFIG.email:cmd==="clear"?"":"Befehl nicht gefunden: "+cmd;if(cmd!=="clear")out.innerHTML+='<p>'+esc(response)+'</p>';else out.innerHTML="";input.value="";});
