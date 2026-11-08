@@ -1,10 +1,10 @@
-/* 3D office with safe 2D fallback for browsers without WebGL. */
+/* 3D-Büro mit sicherem 2D-Fallback für Browser ohne WebGL. */
 (function(){
  var $=function(s){return document.getElementById(s);};
  var touchLayout=window.matchMedia("(max-width: 900px), (pointer: coarse)").matches;
  var hasScene=false,state="boot",joyActive=false;
  document.title=CONFIG.name+" – "+CONFIG.role;
- $("start-title").textContent=CONFIG.name+" / DIGITAL WORKSPACE";
+ $("start-title").textContent=CONFIG.name+" / DIGITALE ARBEITSWELT";
  $("hud-name").textContent=CONFIG.name;$("hud-role").textContent=CONFIG.role;
  Desktop.init(shutdown);
  function initRoom(){
