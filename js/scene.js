@@ -30,7 +30,30 @@ window.Scene=(function(){
    scene.add(new THREE.HemisphereLight(0xe5e9f0,0x45404a,1.1));
    var key=new THREE.DirectionalLight(0xffe5c2,2);key.position.set(-3,6,4);key.castShadow=true;scene.add(key);
    var fill=new THREE.PointLight(0x6f9bc8,12,8);fill.position.set(2,3,2);scene.add(fill);
-   var floor=new THREE.Mesh(new THREE.PlaneGeometry(60,60),mat(0x343b43,1));floor.rotation.x=-Math.PI/2;floor.receiveShadow=true;scene.add(floor);
+   
+   // Small, enclosed developer office: three walls, window, shelving, door and plants.
+   var wall=mat(0x59616a,.95),trim=mat(0x252c34,.7),glass=new THREE.MeshStandardMaterial({color:0x79a9c7,roughness:.22,metalness:.08}),wood=mat(0x624735,.75),leaf=mat(0x426b4c,.9),pot=mat(0x9b7250,.85);
+   var floor=new THREE.Mesh(new THREE.PlaneGeometry(12,12),mat(0x343b43,1));floor.rotation.x=-Math.PI/2;floor.receiveShadow=true;scene.add(floor);
+   box(12,5,.18,0,2.5,-6,wall);box(.18,5,12,-6,2.5,0,wall);box(.18,5,12,6,2.5,0,wall);
+   box(12,.16,.22,0,.12,-5.86,trim);box(.22,.16,12,-5.86,.12,0,trim);box(.22,.16,12,5.86,.12,0,trim);
+   // Wide window and its frame on the back wall.
+   box(3.25,2.25,.12,-2.25,3.05,-5.84,trim);box(3.02,2.02,.06,-2.25,3.05,-5.75,glass);
+   box(.07,2.08,.08,-2.25,3.05,-5.68,trim);box(3.08,.07,.08,-2.25,3.05,-5.68,trim);
+   box(3.5,.12,.3,-2.25,1.88,-5.62,wood);
+   // Door on the right wall with a handle.
+   box(.12,2.35,1.25,5.82,1.2,3.7,wood);box(.04,.12,.12,5.73,1.15,3.25,mat(0xd3b16f,.35));
+   // Bookshelf and a few colorful book spines.
+   box(.62,2.5,2.1,5.45,1.3,-2.5,wood);
+   for(var shelf=0;shelf<4;shelf++){box(.68,.07,2.12,5.38,.35+shelf*.62,-2.5,trim);}
+   var bookMats=[mat(0x9b5849),mat(0x3e6680),mat(0xb18a50),mat(0x687b5b),mat(0x6f5b7d)];
+   for(var row=0;row<3;row++)for(var book=0;book<7;book++){var bh=.34+(book%3)*.06;box(.12,bh,.16,5.25,.57+row*.62+bh/2,-3.28+book*.25,bookMats[(book+row)%bookMats.length]);}
+   // Framed print on the left wall.
+   box(.08,1.15,1.65,-5.82,3.05,-1.7,trim);box(.035,.98,1.48,-5.76,3.05,-1.7,mat(0x243d55));
+   box(.025,.58,1.08,-5.72,3.05,-1.7,mat(0xc08d4d));
+   // Potted plant in the front-left corner.
+   cyl(.27,.2,.42,16,pot,-4.75,.22,2.7);
+   for(var leafIndex=0;leafIndex<6;leafIndex++){var angle=leafIndex*Math.PI/3;var plantLeaf=cyl(.045,.12,.85,7,leaf,-4.75+Math.cos(angle)*.2,.78,2.7+Math.sin(angle)*.2);plantLeaf.rotation.z=Math.cos(angle)*.35;plantLeaf.rotation.x=Math.sin(angle)*.35;}
+
    var desk=mat(0x392d27,.55),edge=mat(0x211b19),plastic=mat(0xaaa9a0,.42),dark=mat(0x26292d,.35);
    box(3.6,.13,1.6,0,1,0,desk);box(3.65,.035,1.64,0,.91,0,edge);
    [[-1.6,-.65],[-1.6,.65],[1.6,-.65],[1.6,.65]].forEach(function(p){box(.09,1,.09,p[0],.45,p[1],edge);});
