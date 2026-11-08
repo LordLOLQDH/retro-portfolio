@@ -9,10 +9,10 @@ window.Bios = (function () {
     var el = document.getElementById("bios");
     var skipper = function () { skip = true; };
     addEventListener("keydown", skipper); addEventListener("pointerdown", skipper);
-    await type(el, CONFIG.name + ", Developer.\nBIOS (C)" + CONFIG.year + " " + CONFIG.name + "\n\nChecking RAM : 14000 OK\n\nLOADING RESOURCES (3/3).\n\n");
-    var items = [["desk", 34], ["monitor", 67], ["office", 100]];
+    await type(el, CONFIG.name + ", Entwickler.\nBIOS (C)" + CONFIG.year + " " + CONFIG.name + "\n\nArbeitsspeicher prüfen : 14000 OK\n\nLADE RESSOURCEN (3/3).\n\n");
+    var items = [["Desktop", 34], ["Monitor", 67], ["Büro", 100]];
     for (var i = 0; i < items.length; i++) {
-      await type(el, "    Loaded " + items[i][0] + " ".repeat(12 - items[i][0].length) + "... " + items[i][1] + "%\n", 6);
+      await type(el, "    Geladen: " + items[i][0] + " ".repeat(12 - items[i][0].length) + "... " + items[i][1] + "%\n", 6);
       await sleep(250);
     }
     await sleep(400);
