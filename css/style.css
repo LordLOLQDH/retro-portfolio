@@ -72,3 +72,31 @@ button.s{background:#e6ad58;color:#17130d;border:0;border-radius:5px;padding:.8r
 #sd{display:none;position:fixed;inset:0;z-index:6;background:#101c29;padding:12vh 8vw;font:clamp(10px,1.8vw,15px)/1.6 ui-monospace,monospace;white-space:pre-wrap;color:#d8e8f5}
 @media(max-width:600px){#crt{width:96vw;border-width:8px;border-radius:16px 16px 22px 22px}#win{left:82px;right:7px;top:8px;bottom:38px}#desktop-apps{left:2px;top:6px;width:72px}.desktop-icon{width:68px}.form-row{grid-template-columns:1fr}#page{padding:12px}.app-nav{gap:1px}.app-nav button{font-size:9px;padding:5px 4px}}
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
+
+@media(max-width:900px),(pointer:coarse){
+ #screen{padding:8px;box-sizing:border-box}
+ #crt{width:100%;height:calc(100dvh - 16px);min-height:420px;aspect-ratio:auto;box-sizing:border-box;border-width:7px;border-radius:12px;grid-template-rows:minmax(0,1fr) 32px}
+ #win{left:76px;right:6px;top:7px;bottom:39px;min-width:0}
+ #desktop-apps{left:1px;top:4px;bottom:38px;width:68px;gap:4px}
+ .desktop-icon{width:64px;min-height:54px;padding:3px 0}
+ .desktop-icon span{height:30px;width:34px;line-height:30px;font-size:20px}
+ .desktop-icon small{font-size:9px}
+ #page{padding:12px;font-size:13px}
+ #page h1{font-size:clamp(25px,7vw,42px)}
+ #page h2{font-size:clamp(21px,5vw,30px)}
+ #page p{font-size:12px}
+ .app-nav{gap:2px;padding-bottom:8px;margin-bottom:12px}
+ .app-nav button{font-size:8px;padding:5px 3px}
+ .hero{padding:1vh 0}
+ .hero-foot{margin-top:22px}
+ .project-grid{grid-template-columns:1fr}
+ .project-card{min-height:110px}
+ .form-row{grid-template-columns:1fr}
+ #task{padding:0 5px}
+}
+@media(max-width:390px){
+ #desktop-apps{width:62px}
+ .desktop-icon{width:58px}
+ #win{left:66px}
+ #page{padding:9px}
+}
