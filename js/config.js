@@ -1,13 +1,13 @@
 /* Portfolio profile and public Supabase connection. */
 window.CONFIG = {
   name: "Adam Kraus",
-  role: "Developer & Founder",
-  email: "kraus-digital@proton.me",
+  role: "Entwickler & Gründer",
+  email: "adam_kraus@icloud.com",
   year: 2026,
   github: "https://github.com/LordLOLQDH",
   linkedin: "",
 
-  about: "I build websites, web applications and digital tools. I enjoy turning ideas into working products, experimenting with new technologies and improving projects step by step.",
+  about: "Ich entwickle Websites, Webanwendungen und digitale Werkzeuge. Ich setze Ideen in funktionierende Projekte um und verbessere sie Schritt für Schritt.",
 
   experience: [],
 
