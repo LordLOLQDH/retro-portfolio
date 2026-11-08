@@ -15,6 +15,24 @@
         return r.data;
       } catch (e) { return CONFIG.fallbackProjects; }
     },
+    githubSession: async function () {
+      if (!client) return { session: null, error: { message: "Supabase Auth ist nicht konfiguriert." } };
+      try {
+        var r = await client.auth.getSession();
+        return { session: r.data && r.data.session, error: r.error };
+      } catch (e) { return { session: null, error: e }; }
+    },
+    githubSignIn: async function () {
+      if (!client) return { error: { message: "Supabase Auth ist nicht konfiguriert." } };
+      return await client.auth.signInWithOAuth({
+        provider: "github",
+        options: { redirectTo: window.location.href, scopes: "read:user user:follow" }
+      });
+    },
+    githubSignOut: async function () {
+      if (!client) return { error: { message: "Supabase Auth ist nicht konfiguriert." } };
+      return await client.auth.signOut();
+    },
     sendMessage: async function (m) {
       if (!client) return { error: { message: "Supabase is not configured." } };
       try {
