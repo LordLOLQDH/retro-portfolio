@@ -1,0 +1,38 @@
+html,body{margin:0;height:100%;background:#000;overflow:hidden;font-family:ui-monospace,Menlo,Consolas,monospace;color:#fff}
+canvas{display:block;position:fixed;inset:0}
+.full{position:fixed;inset:0;z-index:5}
+.center{text-align:center}
+#bios{padding:1.5rem;white-space:pre-wrap;font-size:clamp(11px,2.4vw,16px);line-height:1.5;background:#000}
+#start{display:none;place-items:center;background:#000}
+#start .box{border:8px solid #fff;padding:2rem 2.5rem;max-width:30rem;margin:1rem;font-size:15px}
+#start .warn{color:#ff0}
+button.s{background:#000;color:#fff;border:6px solid #fff;padding:.7rem 1.4rem;font:inherit;cursor:pointer;margin-top:1rem}
+button.s:focus-visible{outline:3px solid #ff0}
+#hint,#hud{position:fixed;z-index:3;background:#000;color:#fff;padding:.6rem 1rem;display:none}
+#hint{left:50%;bottom:8vh;translate:-50% 0;cursor:pointer}
+#hud{left:1rem;top:1rem;line-height:1.6}
+
+/* retro desktop */
+#screen{display:none;position:fixed;inset:0;z-index:4;place-items:center;pointer-events:none}
+#crt{pointer-events:auto;width:min(96vw,calc(88vh*1.3333));aspect-ratio:4/3;background:#4a9aa0;position:relative;border:4px solid #1a2a2c;
+  display:grid;grid-template-rows:minmax(0,1fr) 28px;font:13px/1.4 Georgia,"Times New Roman",serif;color:#000}
+#win{margin:8px 8px 6px 46px;background:#c0c0c0;border:2px outset #fff;display:grid;grid-template-rows:20px minmax(0,1fr) 18px;min-height:0}
+#tb{background:#000080;color:#fff;font:bold 11px system-ui;display:flex;justify-content:space-between;align-items:center;padding:0 3px}
+#tb .b{background:#c0c0c0;color:#000;border:1px outset #fff;padding:0 5px;margin-left:2px;font:inherit;cursor:pointer;display:inline-block}
+#page{background:#fff;overflow:auto;padding:1rem 1.4rem;font-size:clamp(11px,1.7vw,16px)}
+#status{background:#c0c0c0;font:10px system-ui;padding:2px 6px;color:#000}
+#task{background:#c0c0c0;border-top:2px outset #fff;display:flex;align-items:center;justify-content:space-between;font:bold 11px system-ui;padding:0 6px}
+.ico{position:absolute;left:6px;font:10px system-ui;color:#fff;text-align:center;width:36px}
+.ico i{display:block;width:26px;height:26px;margin:0 auto 2px;background:#fff;color:#c00;font:bold 20px/26px Georgia;font-style:normal}
+#page h1{font:900 clamp(26px,6vw,56px)/1 Georgia,serif;margin:.3rem 0}
+#page h2{font:900 clamp(20px,3.6vw,34px) Georgia,serif;margin:0 0 .6rem}
+#page a{color:#00e}
+#page nav a{margin-right:1rem;font-weight:bold;text-transform:uppercase;font-size:.85em}
+#page .c{text-align:center;padding-top:10%}
+#page label{display:block;font-weight:bold;margin:.5rem 0 .1rem}
+#page input,#page textarea{width:100%;box-sizing:border-box;border:2px inset #999;font:inherit;padding:3px;background:#fff}
+#page button{margin-top:.6rem;border:2px outset #fff;background:#c0c0c0;font:inherit;padding:2px 12px;cursor:pointer}
+#page .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+#page .links a{margin-right:.8rem}
+#sd{display:none;position:fixed;inset:0;z-index:6;background:#1f3236;padding:12vh 8vw;font:clamp(10px,1.8vw,15px)/1.6 ui-monospace,monospace;white-space:pre-wrap;color:#cfe}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
