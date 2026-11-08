@@ -1,26 +1,28 @@
 /* 3D desk scene with a continuously animated CRT display texture. */
 window.Scene=(function(){
- var renderer,scene,camera,screenMesh,screenCanvas,screenCtx,screenTexture,mode="hidden",t=0;
+ var renderer,scene,camera,screenMesh,screenCanvas,screenCtx,screenTexture,mode="walk",t=0,player=new THREE.Vector3(0,0,4.2),move={x:0,y:0},keys={},onMonitor=function(){};
  var idlePos=new THREE.Vector3(4.2,3.1,5.2),lookAtHome=new THREE.Vector3(0,1.2,0),zoomPos=new THREE.Vector3(0,1.82,1.45),zoomLook=new THREE.Vector3(0,1.82,0),curLook=lookAtHome.clone(),targetPos=idlePos.clone();
  function mat(c,r){return new THREE.MeshStandardMaterial({color:c,roughness:r==null?.8:r});}
  function box(w,h,d,x,y,z,m,parent){var o=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),m);o.position.set(x,y,z);o.castShadow=o.receiveShadow=true;(parent||scene).add(o);return o;}
  function cyl(rt,rb,h,seg,m,x,y,z,parent){var o=new THREE.Mesh(new THREE.CylinderGeometry(rt,rb,h,seg),m);o.position.set(x,y,z);o.castShadow=true;(parent||scene).add(o);return o;}
  function drawScreen(now){
    if(!screenCtx)return;var c=screenCtx,w=c.canvas.width,h=c.canvas.height;
-   c.fillStyle="#142c49";c.fillRect(0,0,w,h);
-   var g=c.createLinearGradient(0,0,w,h);g.addColorStop(0,"#203e63");g.addColorStop(1,"#0c1727");c.fillStyle=g;c.fillRect(0,0,w,h);
-   c.fillStyle="#e4b76c";c.fillRect(18,18,7,7);c.fillStyle="#f2f5f8";c.font="bold 17px Arial";c.fillText("ADAM KRAUS",36,27);
-   c.fillStyle="#b7c6d6";c.font="10px Arial";c.fillText("DEVELOPER  /  DIGITAL BUILDER",18,48);
-   c.fillStyle="#f5f7fa";c.font="bold 34px Arial";c.fillText("Ideas into",18,111);c.fillText("working things.",18,150);
-   c.fillStyle="#aebfd1";c.font="11px Arial";c.fillText("Websites · Applications · Experiments",18,176);
-   c.fillStyle="#e4b76c";c.fillRect(18,198,86,24);c.fillStyle="#142c49";c.font="bold 9px Arial";c.fillText("VIEW WORK",31,214);
-   c.fillStyle="#ffffff20";c.fillRect(18,244,w-36,1);
-   var labels=["KDS AI","PHASEONE","CODECORE"];labels.forEach(function(v,i){var x=18+i*112;c.fillStyle="#294563";c.fillRect(x,264,100,78);c.fillStyle="#dce7f2";c.font="bold 11px Arial";c.fillText(v,x+8,287);c.fillStyle="#aabbd0";c.font="9px Arial";c.fillText("PROJECT / 0"+(i+1),x+8,312);});
-   c.fillStyle="#d7e2ee";c.font="9px Arial";c.fillText("SYSTEM ONLINE",18,h-16);
-   c.fillStyle="#e4b76c";c.fillRect(w-35,h-25,8,8+Math.sin(now/350)*3);
-   // moving cursor and blinking caret keep the display alive before interaction
-   var px=45+(now/18%(w-90));c.fillStyle="#fff";c.fillRect(px,229,7,10);
-   c.fillStyle="#ffffff12";for(var y=0;y<h;y+=4)c.fillRect(0,y,w,1);
+   c.fillStyle="#f7f8fa";c.fillRect(0,0,w,h);
+   c.fillStyle="#183c73";c.fillRect(0,0,w,34);
+   c.fillStyle="#fff";c.font="bold 11px Arial";c.fillText("ADAM KRAUS  /  DIGITAL WORKSPACE",16,22);
+   c.fillStyle="#a16c2c";c.font="bold 9px Arial";c.fillText("PERSONAL PORTFOLIO / "+String(CONFIG.year||2026),18,62);
+   c.fillStyle="#11151b";c.font="bold 34px Arial";c.fillText(CONFIG.name||"Adam Kraus",18,112);
+   c.fillStyle="#68717d";c.font="16px Arial";c.fillText(CONFIG.role||"Developer & Founder",18,139);
+   c.fillStyle="#596575";c.font="11px Arial";
+   var words=(CONFIG.about||"I build websites, web applications and digital tools.").split(" "),line="",y=168;
+   words.forEach(function(word){var test=line?line+" "+word:word;if(c.measureText(test).width>430){c.fillText(line,18,y);line=word;y+=17;}else line=test;});
+   if(line)c.fillText(line,18,y);
+   c.fillStyle="#183c73";c.fillRect(18,228,106,27);c.fillStyle="#fff";c.font="bold 9px Arial";c.fillText("EXPLORE PROJECTS",25,245);
+   c.fillStyle="#e4e8ed";c.fillRect(132,228,96,27);c.fillStyle="#25364a";c.fillText("GET IN TOUCH",143,245);
+   c.fillStyle="#d9dee5";c.fillRect(18,274,w-36,1);
+   c.fillStyle="#9aa2ac";c.font="bold 8px Arial";c.fillText("BUILDING DIGITAL THINGS THAT WORK.",18,296);
+   c.fillStyle="#183c73";c.fillRect(18,h-30,Math.max(30,(now/45)%110),3);
+   c.fillStyle="#68717d";c.font="9px Arial";c.fillText("CLICK MONITOR TO OPEN DESKTOP",18,h-12);
    screenTexture.needsUpdate=true;
  }
  function build(){
@@ -54,7 +56,28 @@ window.Scene=(function(){
    var chair=new THREE.Group();scene.add(chair);box(.72,.12,.72,.0,0,0,mat(0x282e35),chair);box(.1,.72,.58,.34,.4,0,mat(0x282e35),chair);cyl(.04,.04,.55,8,dark,0,-.3,0,chair);chair.position.set(.55,.83,1.65);chair.rotation.y=-.5;
  }
  function resize(){if(!renderer)return;renderer.setSize(innerWidth,innerHeight);camera.aspect=innerWidth/innerHeight;idlePos.z=camera.aspect<1?8.5:5.2;camera.updateProjectionMatrix();}
- function loop(now){requestAnimationFrame(loop);drawScreen(now||0);var dest,k;if(mode==="zoom"){dest=zoomPos;k=.045;}else{if(mode==="idle"){t+=.004;targetPos.set(4.2+Math.sin(t)*.5,3.1,idlePos.z+Math.cos(t)*.3);}else targetPos.copy(idlePos);dest=targetPos;k=.03;}camera.position.lerp(dest,k);curLook.lerp(mode==="zoom"?zoomLook:lookAtHome,k);camera.lookAt(curLook);renderer.render(scene,camera);}
- function init(){try{renderer=new THREE.WebGLRenderer({antialias:true,alpha:false});}catch(e){return false;}renderer.setPixelRatio(Math.min(devicePixelRatio||1,2));renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;document.body.prepend(renderer.domElement);scene=new THREE.Scene();camera=new THREE.PerspectiveCamera(35,1,.1,60);build();resize();addEventListener("resize",resize);camera.position.copy(idlePos);loop(0);return true;}
- return {init:init,setMode:function(m){mode=m;},screenVisible:function(v){if(screenMesh)screenMesh.visible=v;}};
+ function loop(now){requestAnimationFrame(loop);drawScreen(now||0);var dest,k;
+   if(mode==="zoom"){dest=zoomPos;k=.07;camera.position.lerp(dest,k);curLook.lerp(zoomLook,k);}
+   else {var dx=move.x, dz=move.y;
+     if(keys.ArrowLeft||keys.a)dx-=1;if(keys.ArrowRight||keys.d)dx+=1;
+     if(keys.ArrowUp||keys.w)dz-=1;if(keys.ArrowDown||keys.s)dz+=1;
+     var len=Math.hypot(dx,dz)||1;dx/=len;dz/=len;
+     var nx=THREE.MathUtils.clamp(player.x+dx*.055,-4.4,4.4),nz=THREE.MathUtils.clamp(player.z+dz*.055,-4.2,5.2);
+     // Keep the player out of the desk itself.
+     if(!(Math.abs(nx)<2.05&&nz>-.95&&nz<1.15)){player.x=nx;player.z=nz;}
+     dest.set(player.x,player.y+1.65,player.z+0.02);camera.position.lerp(dest,.16);
+     var look=new THREE.Vector3(player.x,player.y+1.45,player.z-3.5);curLook.lerp(look,.16);
+   }
+   camera.lookAt(curLook);renderer.render(scene,camera);
+ }
+ function init(){try{renderer=new THREE.WebGLRenderer({antialias:true,alpha:false});}catch(e){return false;}
+   renderer.setPixelRatio(Math.min(devicePixelRatio||1,2));renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+   renderer.domElement.id="room-canvas";document.body.prepend(renderer.domElement);scene=new THREE.Scene();camera=new THREE.PerspectiveCamera(55,1,.1,60);
+   build();resize();addEventListener("resize",resize);camera.position.set(0,1.7,4.22);curLook.set(0,1.45,.7);
+   addEventListener("keydown",function(e){keys[e.key]=true;if(["ArrowUp","ArrowDown","ArrowLeft","ArrowRight"," "].includes(e.key))e.preventDefault();});
+   addEventListener("keyup",function(e){keys[e.key]=false;});
+   renderer.domElement.addEventListener("click",function(e){if(mode!=="zoom"){var rect=renderer.domElement.getBoundingClientRect(),pointer=new THREE.Vector2(((e.clientX-rect.left)/rect.width)*2-1,-((e.clientY-rect.top)/rect.height)*2+1),ray=new THREE.Raycaster();ray.setFromCamera(pointer,camera);if(ray.intersectObject(screenMesh).length)onMonitor();}});
+   loop(0);return true;}
+ return {init:init,setMode:function(m){mode=m;},screenVisible:function(v){if(screenMesh)screenMesh.visible=v;},
+   setMove:function(x,y){move.x=x;move.y=y;},onMonitor:function(fn){onMonitor=fn;}};
 })();
