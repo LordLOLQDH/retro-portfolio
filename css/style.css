@@ -121,3 +121,9 @@ button.s{background:#e6ad58;color:#17130d;border:0;border-radius:5px;padding:.8r
 .github-account button[hidden]{display:none}
 .github-account button:disabled{opacity:.55;cursor:wait}
 @media(max-width:600px){.github-stats>div{padding:12px}.github-account button{width:100%;margin:7px 0}}
+
+.github-mini{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:18px 1vw 0;padding:12px 14px;border:1px solid var(--line);background:#fff;color:var(--ink)}
+.github-mini>span{font-size:9px;font-weight:800;letter-spacing:.12em;color:#a16c2c}
+.github-mini strong{font-size:11px;color:#435064}
+.github-mini strong b{font-size:16px;color:#183c73;font-variant-numeric:tabular-nums}
+.github-mini button{border:0;background:#183c73;color:#fff;padding:8px 11px;font-size:10px;font-weight:700;cursor:pointer}
