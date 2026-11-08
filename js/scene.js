@@ -1,12 +1,13 @@
 /* 3D desk scene with a continuously animated CRT display texture. */
 window.Scene=(function(){
- var renderer,scene,camera,screenMesh,screenCanvas,screenCtx,screenTexture,mode="room",t=0,player=new THREE.Vector3(0,0,4.2),move={x:0,y:0},keys={},onMonitor=function(){};
+ var renderer,scene,camera,screenMesh,screenCanvas,screenCtx,screenTexture,screenPowered=false,mode="room",t=0,player=new THREE.Vector3(0,0,4.2),move={x:0,y:0},keys={},onMonitor=function(){};
  var idlePos=new THREE.Vector3(4.2,3.1,5.2),lookAtHome=new THREE.Vector3(0,1.2,0),zoomPos=new THREE.Vector3(0,1.82,1.45),zoomLook=new THREE.Vector3(0,1.82,0),curLook=lookAtHome.clone(),targetPos=idlePos.clone();
  function mat(c,r){return new THREE.MeshStandardMaterial({color:c,roughness:r==null?.8:r});}
  function box(w,h,d,x,y,z,m,parent){var o=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),m);o.position.set(x,y,z);o.castShadow=o.receiveShadow=true;(parent||scene).add(o);return o;}
  function cyl(rt,rb,h,seg,m,x,y,z,parent){var o=new THREE.Mesh(new THREE.CylinderGeometry(rt,rb,h,seg),m);o.position.set(x,y,z);o.castShadow=true;(parent||scene).add(o);return o;}
  function drawScreen(now){
    if(!screenCtx)return;var c=screenCtx,w=c.canvas.width,h=c.canvas.height;
+   if(!screenPowered){c.fillStyle="#050607";c.fillRect(0,0,w,h);screenTexture.needsUpdate=true;return;}
    c.fillStyle="#f7f8fa";c.fillRect(0,0,w,h);
    c.fillStyle="#183c73";c.fillRect(0,0,w,34);
    c.fillStyle="#fff";c.font="bold 11px Arial";c.fillText("ADAM KRAUS  /  DIGITALE ARBEITSWELT",16,22);
@@ -101,6 +102,6 @@ window.Scene=(function(){
    addEventListener("keyup",function(e){keys[e.key]=false;});
    renderer.domElement.addEventListener("click",function(e){if(mode!=="zoom"){var rect=renderer.domElement.getBoundingClientRect(),pointer=new THREE.Vector2(((e.clientX-rect.left)/rect.width)*2-1,-((e.clientY-rect.top)/rect.height)*2+1),ray=new THREE.Raycaster();ray.setFromCamera(pointer,camera);if(ray.intersectObject(screenMesh).length)onMonitor();}});
    loop(0);return true;}
- return {init:init,setMode:function(m){mode=m;},screenVisible:function(v){if(screenMesh)screenMesh.visible=v;},
+ return {init:init,setMode:function(m){mode=m;},setPower:function(v){screenPowered=!!v;},screenVisible:function(v){if(screenMesh)screenMesh.visible=v;},
    setMove:function(x,y){move.x=x;move.y=y;},onMonitor:function(fn){onMonitor=fn;}};
 })();
