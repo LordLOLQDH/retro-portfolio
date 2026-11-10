@@ -21,7 +21,7 @@ window.CONFIG = {
     { title: "AFTERSTATE", description: "3D-Open-World-Browsergame mit erster spielbarer Stadtumgebung und Third-Person-Steuerung.", url: "https://github.com/LordLOLQDH/afterstate", tags: "3D, Browsergame, Three.js" },
     { title: "MAILCORE", description: "Browserbasierter Live-Messenger mit Nutzerkonten, Direktchats und Echtzeitnachrichten.", url: "https://github.com/LordLOLQDH/MAILCORE", tags: "Messenger, Supabase" },
     { title: "SubFree", description: "Community-Projekt für persönliche Websites und kleine Entwicklerprojekte mit Subdomain- und HTTPS-Weiterleitungs-Konzept.", url: "https://github.com/LordLOLQDH/subfree", tags: "Domains, Web" }
-  ]
+  ],
 
   supabase: {
     url: "https://eopvkwhcgznvubesaszv.supabase.co",
