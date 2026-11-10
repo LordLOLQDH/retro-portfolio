@@ -3,7 +3,10 @@
 Portfolio im Stil eines alten Büro-PCs: BIOS-Boot → 3D-Schreibtisch → Zoom in den Röhrenmonitor → Windows-95-Desktop mit
 Home / About / Experience / Projects / Contact → Shutdown-Sequenz.
 
+- Repository: https://github.com/LordLOLQDH/retro-portfolio
 - Hosting: **GitHub Pages** (kostenlos)
+- GitHub-Pages-Adresse: https://lordlolqdh.github.io/retro-portfolio/
+- In der `CNAME`-Datei hinterlegte benutzerdefinierte Domain: `adam.is-not.cool` (DNS-Erreichbarkeit nicht automatisch bestätigt)
 - Backend: **Supabase** (Free Plan): Projekte laden + Kontaktformular speichern
 - Kein Build-Schritt, kein Node nötig. Three.js und supabase-js liegen in `vendor/`.
 
@@ -179,7 +182,7 @@ Die App **GitHub** zeigt die öffentlichen Follower- und Repository-Zahlen des P
 - GitHub OAuth App als Provider anlegen.
 - In Supabase die OAuth Client ID und das Client Secret hinterlegen.
 - Als Callback-URL die Supabase-Callback-Adresse verwenden: `https://eopvkwhcgznvubesaszv.supabase.co/auth/v1/callback`.
-- Die Website muss als Redirect-URL in Supabase erlaubt sein: `https://lordlolqdh.github.io/retro-protfolio/`.
+- Die verwendete Website-Adresse muss in Supabase als Redirect-URL erlaubt sein: `https://adam.is-not.cool/` und/oder `https://lordlolqdh.github.io/retro-portfolio/`. Die benutzerdefinierte Domain ist in der `CNAME`-Datei eingetragen; ihre DNS-Erreichbarkeit muss separat geprüft werden.
 - Der OAuth-Zugriff benötigt die Scopes `read:user user:follow`, damit angemeldete Besucher dem Profil folgen können.
 
 Die Website speichert kein GitHub-Passwort. Die Anmeldung läuft über Supabase Auth und GitHub OAuth. Das GitHub-Zugriffstoken bleibt in der Auth-Session des angemeldeten Besuchers und wird nur für den Follow-Aufruf verwendet.
